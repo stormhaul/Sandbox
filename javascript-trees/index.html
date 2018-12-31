@@ -1,0 +1,66 @@
+<script src="rendering/renderer.js"></script>
+<script src="generators/tree.js"></script>
+<script src="generators/branch.js"></script>
+<script src="encoders/tree.js"></script>
+<script src="queues/priority.js"></script>
+<script src="queues/node.js"></script>
+
+<script src="data-objects/angle.js"></script>
+<script src="data-objects/coordinate.js"></script>
+<script src="data-objects/instruction.js"></script>
+<canvas id="canvas"></canvas>
+
+<style>*{
+  background: black;
+  margin: 0;
+  padding: 0;
+}</style>
+<script>
+  let gen = new TreeGenerator();
+  let encoder = new TreeEncoder();
+
+  let tree = gen.requestTree();
+  let instructions = encoder.encodeTree(tree);
+  let n = 0;
+  let canvas    = document.getElementById('canvas');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  let ctx = canvas.getContext('2d');
+  let renderer = new Renderer(ctx, canvas);
+  async function loop () {
+    if (instructions.count == 0) {
+      instructions = null;
+      await sleep(500);
+      instructions = encoder.encodeTree(gen.requestTree());
+      renderer.wipeScreen();
+      // await sleep(1000);
+    } else {
+      let layer = instructions.dequeue(renderer, true);
+      // for (let i in layer) {
+      //   let inst = layer[i];
+      //   renderer.drawLine(inst.start, inst.end, inst.width);
+      // }
+    }
+    setTimeout(function(){loop();}, 20);
+  }
+  loop();
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // let instruction = instructions.dequeue();
+  // console.log(instructions.count, instruction);
+  // while (instructions.count > 0) {
+  //   console.log("looped", instruction);
+  //   // if (instruction != undefined && instruction != null) {
+  //   //   for (var i in instruction) {
+  //   //     let t = instruction[i];
+  //   //     renderer.drawLine(t.start, t.end, t.width);
+  //   //   }
+  //   // }
+  //   renderer.drawLine(instruction.start, instruction.end, instruction.width);
+  //   instruction = instructions.dequeue();
+  //   n++;
+  // }
+</script>

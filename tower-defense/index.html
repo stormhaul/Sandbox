@@ -1,0 +1,28 @@
+<style>*{background:black; margin:0; padding:0; box-sizing:border-box;}</style>
+
+<canvas id="canvas"></canvas>
+
+<!-- Game Engine Files -->
+<script src="GameEngine/MainLoop.js"></script>
+
+<!-- Algorithm Classes -->
+<script src="Algorithms/AStar.js"></script>
+
+<!-- Helper Classes -->
+<script src="Helpers/PriorityQueue/PriorityQueue.js"></script>
+<script src="Helpers/PriorityQueue/PriorityQueueNode.js"></script>
+
+<script>
+  let l = new MainLoop();
+  l.initializeLoop();
+
+  let grid = [
+    [0,0,0,0],
+    [0,1,1,1],
+    [0,1,0,0],
+    [0,0,0,0]
+  ];
+
+  let a = new AStar(grid);
+  console.log(a.findPath({x:0, y:3}, {x:3, y:3}));
+</script>
