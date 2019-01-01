@@ -1,8 +1,8 @@
 "using strict";
 
 class AStar {
-  constructor (grid) {
-    this._grid = grid;
+  constructor (grid_controller) {
+    this._grid = grid_controller.getGrid();
 
     this._vectors = [
       {x:-1, y:-1},
@@ -18,8 +18,8 @@ class AStar {
     this._blockers = {1: true};
   }
 
-  updateGrid (grid) {
-    this._grid = grid;
+  updateGrid (grid_controller) {
+    this._grid = grid_controller.getGrid;
   }
 
   findPath (start, end) {

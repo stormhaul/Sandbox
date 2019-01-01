@@ -1,0 +1,5 @@
+"using strict";
+
+class MapController {
+  
+}
