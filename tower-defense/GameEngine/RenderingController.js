@@ -123,7 +123,7 @@ class RenderingController {
     this._ctx.strokeStyle = "red";
     this._ctx.fillStyle = "red";
     this._ctx.beginPath();
-    this._ctx.arc(waypoint.x + .5 * this._cell_width, waypoint.y + .5 * this._cell_width, .5 * this._cell_width -2, 0, Math.PI * 2);
+    this._ctx.arc(waypoint.x + .5 * this._cell_width, waypoint.y + .5 * this._cell_width, .25 * this._cell_width -2, 0, Math.PI * 2);
     this._ctx.fill();
   }
 
