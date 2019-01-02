@@ -2,8 +2,15 @@
 
 class GridController {
   constructor (configuration = {}) {
-    this._width                 = configuration.width                 != undefined ? configuration.width                 : 100;
-    this._height                = configuration.height                != undefined ? configuration.height                : 100;
+    this._width                 = configuration.rows                  != undefined ? configuration.rows                  : 55;
+    this._height                = configuration.columns               != undefined ? configuration.columns               : 55;
+
+    if (configuration.cell_width != undefined) {
+      let padding  = configuration.grid_padding != undefined ? configuration.grid_padding : 10;
+      this._width  = Math.floor((window.innerWidth - padding)  / configuration.cell_width);
+      this._height = Math.floor((window.innerHeight - padding) / configuration.cell_width);
+    }
+
     this._waypoints_count       = configuration.waypoints             != undefined ? configuration.waypoints             : 5;
     this._min_waypoint_distance = configuration.min_waypoint_distance != undefined ? configuration.min_waypoint_distance : 5;
 
