@@ -19,10 +19,11 @@ class AStar {
   }
 
   updateGrid (grid_controller) {
-    this._grid = grid_controller.getGrid;
+    this._grid = grid_controller.getGrid();
   }
 
   findPath (start, end) {
+    console.log(start, end, this._grid);
     let closed_set = {};
     let open_set   = new PriorityQueue();
 

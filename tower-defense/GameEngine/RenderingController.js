@@ -44,6 +44,7 @@ class RenderingController {
   }
 
   drawWaypoints(grid_controller) {
+    console.log(grid_controller.getWaypoints(), grid_controller._path);
     let waypoints = grid_controller.getWaypoints();
     for (let i in waypoints) {
       let waypoint = waypoints[i];
@@ -53,24 +54,20 @@ class RenderingController {
   }
 
   drawPath (grid_controller) {
+    let path = grid_controller._path;
     let waypoints = grid_controller.getWaypoints();
-    let prev = null;
-    for (let i in waypoints) {
-      if (prev == null) {
-        prev = waypoints[i];
-        continue;
+    for (let i in path) {
+      let segment = path[i];
+      let prev_part = null;
+      for (let j in segment) {
+        let part = segment[j];
+        if (prev_part != null) {
+          let c1 = this._getTileCenter(prev_part);
+          let c2 = this._getTileCenter(part);
+          this._drawArrow(c1, c2);
+        }
+        prev_part = part;
       }
-      let waypoint = waypoints[i];
-      let waypoint_center = {
-        x: this._grid_padding + waypoint.x * this._cell_width + 0.5 * this._cell_width,
-        y: this._grid_padding + waypoint.y * this._cell_width + 0.5 * this._cell_width
-      };
-      let prev_center = {
-        x: this._grid_padding + prev.x * this._cell_width + 0.5 * this._cell_width,
-        y: this._grid_padding + prev.y * this._cell_width + 0.5 * this._cell_width
-      };
-      this._drawArrow(prev_center, waypoint_center);
-      prev = waypoint;
     }
   }
 
@@ -129,5 +126,12 @@ class RenderingController {
 
   _calculateDistance (p1, p2) {
     return Math.pow(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2), 0.5);
+  }
+
+  _getTileCenter (point) {
+    return {
+      x: this._grid_padding + point.x * this._cell_width + 0.5 * this._cell_width,
+      y: this._grid_padding + point.y * this._cell_width + 0.5 * this._cell_width
+    };
   }
 }

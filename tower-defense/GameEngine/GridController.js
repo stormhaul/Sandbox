@@ -15,6 +15,9 @@ class GridController {
     this._min_waypoint_distance = configuration.min_waypoint_distance != undefined ? configuration.min_waypoint_distance : 5;
 
     this.initGrid();
+
+    this._path = this._generatePath();
+    console.log("hi", this._waypoints, this._path);
   }
 
   initGrid () {
@@ -48,6 +51,26 @@ class GridController {
         this._waypoints.push(point);
       }
     }
+  }
+
+  _generatePath () {
+    let path = [];
+
+    let a_star = new AStar(this);
+
+    let prev = null;
+    for (let i in this._waypoints) {
+      let cur = this._waypoints[i];
+      if (prev != null) {
+        let segment = a_star.findPath(prev, cur);
+        if (segment == undefined) {
+          return [];
+        }
+        path.push(segment);
+      }
+      prev = cur;
+    }
+    return path;
   }
 
   _isValidWaypoint (point) {
