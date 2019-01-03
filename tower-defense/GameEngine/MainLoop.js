@@ -12,6 +12,11 @@ class MainLoop {
   }
 
   initializeLoop () {
+    this.gc = new GridController(configuration);
+    this.rc = new RenderingController(configuration);
+
+    this.rc.drawGrid(this.gc);
+
     this._loop();
   }
 
