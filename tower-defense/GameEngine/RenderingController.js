@@ -77,7 +77,7 @@ class RenderingController {
     let angle = Math.atan2(start.y-end.y, start.x-end.x);
     let flange_angle1 = angle - (30 * Math.PI / 180);
     let flange_angle2 = angle + (30 * Math.PI / 180);
-    let flange_length = Math.max(5, distance / 20);
+    let flange_length = Math.max(10, distance / 20);
     let flange1 = {x: Math.cos(flange_angle1) * flange_length + end.x, y: Math.sin(flange_angle1) * flange_length + end.y};
     let flange2 = {x: Math.cos(flange_angle2) * flange_length + end.x, y: Math.sin(flange_angle2) * flange_length + end.y};
     this._ctx.strokeStyle = "green";
@@ -86,6 +86,10 @@ class RenderingController {
     this._ctx.beginPath();
     this._ctx.moveTo(start.x, start.y);
     this._ctx.lineTo(end.x, end.y);
+    this._ctx.stroke();
+    this._ctx.strokeStyle = "blue";
+    this._ctx.beginPath();
+    this._ctx.moveTo(end.x, end.y);
     this._ctx.lineTo(flange1.x, flange1.y);
     this._ctx.moveTo(end.x, end.y);
     this._ctx.lineTo(flange2.x, flange2.y);
