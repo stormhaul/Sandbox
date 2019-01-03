@@ -52,6 +52,7 @@ class AStar {
       if (current == this._pointKey(end)) {
         let path = this._reconstructPath(came_from, current);
         path.push(end);
+        console.log(g_score, f_score);
         return path;
       }
       let current_coord = this._keyPoint(current);
@@ -67,14 +68,14 @@ class AStar {
 
         let tentative_g_score = g_score[current] + this._heuristicCostEstimate(current_coord, n);
 
+        f_score[n_key]   = tentative_g_score + this._heuristicCostEstimate(n, end);
         if (!open_set.contains(n_key)) {
-          open_set.enqueue(n_key);
+          open_set.enqueue(n_key, f_score[n_key]);
         } else if (tentative_g_score >= g_score[n_key]) {
           continue;
         }
         came_from[n_key] = current;
         g_score[n_key]   = tentative_g_score;
-        f_score[n_key]   = tentative_g_score + this._heuristicCostEstimate(n, end);
       }
 
       current = open_set.dequeue();

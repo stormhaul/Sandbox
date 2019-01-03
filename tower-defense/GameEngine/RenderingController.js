@@ -23,6 +23,7 @@ class RenderingController {
   }
 
   drawGrid (grid_controller) {
+    console.log(grid_controller)
     let total_width  = this._cell_width * this._columns;
     let total_height = this._cell_width * this._rows;
     // this._drawRect({x: this._grid_padding, y: this._grid_padding}, total_width - 2 * this._grid_padding, total_height - 2 * this._grid_padding);
