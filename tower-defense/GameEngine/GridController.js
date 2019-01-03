@@ -17,7 +17,8 @@ class GridController {
     this.initGrid();
 
     this._path = this._generatePath();
-    console.log("hi", this._waypoints, this._path);
+
+    this._tower_builder = new TowerBuilder(configuration);
   }
 
   initGrid () {
@@ -39,6 +40,10 @@ class GridController {
 
   getWaypoints () {
     return this._waypoints;
+  }
+
+  addTower (location) {
+    this._grid[location.x][location.y] = this._tower_builder.buildTower(location);
   }
 
   _generateWaypoints () {

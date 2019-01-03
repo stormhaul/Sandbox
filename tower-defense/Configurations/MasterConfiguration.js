@@ -13,6 +13,6 @@ var configuration = {
   default_lives: 20,
   tower_cost: 100,
   tower_rate: 1,
-  tower_range: 200,
+  tower_range: 5,
   tower_damage: 20
 };

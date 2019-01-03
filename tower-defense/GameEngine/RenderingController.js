@@ -19,11 +19,19 @@ class RenderingController {
     this._resizeCanvas();
 
     this._cell_width = configuration.cell_width != undefined ? configuration.cell_width : 10; //this._generateCellWidth();
-    //this._testDraw();
+    this.mousePos = {x: -1, y:-1};
+
+    let that = this;
+    this._$canvas.addEventListener('mousemove', function(e) {
+      let mousePos = that._getMousePosition(e);
+      mousePos = {x: Math.floor((mousePos.x - that._grid_padding) / that._cell_width), y: Math.floor((mousePos.y - that._grid_padding) / that._cell_width)};
+      that.mousePos = mousePos;
+      that.drawCursor(mousePos);
+    })
   }
 
   drawGrid (grid_controller) {
-    console.log(grid_controller)
+    this._wipeCanvas();
     let total_width  = this._cell_width * this._columns;
     let total_height = this._cell_width * this._rows;
     // this._drawRect({x: this._grid_padding, y: this._grid_padding}, total_width - 2 * this._grid_padding, total_height - 2 * this._grid_padding);
@@ -42,14 +50,17 @@ class RenderingController {
     }
 
     this.drawWaypoints(grid_controller);
+    this.drawCursor(this.mousePos);
   }
 
   drawWaypoints(grid_controller) {
-    console.log(grid_controller.getWaypoints(), grid_controller._path);
     let waypoints = grid_controller.getWaypoints();
     for (let i in waypoints) {
       let waypoint = waypoints[i];
-      this._drawCircle({x: this._grid_padding + waypoint.x * this._cell_width, y: this._grid_padding + waypoint.y * this._cell_width});
+      this._drawCircle({x: this._grid_padding + waypoint.x * this._cell_width, y: this._grid_padding + waypoint.y * this._cell_width},
+        .25 * this._cell_width - 2,
+        'red'
+      );
     }
     this.drawPath(grid_controller);
   }
@@ -69,6 +80,13 @@ class RenderingController {
         }
         prev_part = part;
       }
+    }
+  }
+
+  drawCursor (mousePos) {
+    if (mousePos.x >= 0 && mousePos.x < this._columns && mousePos.y >= 0 && mousePos.y < this._rows) {
+      let position = {x: mousePos.x * this._cell_width + this._grid_padding, y: mousePos.y * this._cell_width + this._grid_padding};
+      this._drawCircle(position, .5 * this._cell_width - 2, 'yellow');
     }
   }
 
@@ -96,6 +114,11 @@ class RenderingController {
     this._ctx.stroke();
   }
 
+  _wipeCanvas () {
+    this._ctx.fillStyle = "black";
+    this._ctx.fillRect(0,0, this._$canvas.width, this._$canvas.height);
+  }
+
   _resizeCanvas () {
     this._$canvas.width  = window.innerWidth;
     this._$canvas.height = window.innerHeight;
@@ -121,11 +144,11 @@ class RenderingController {
     this._ctx.lineTo(end.x, end.y);
     this._ctx.stroke();
   }
-  _drawCircle (waypoint) {
-    this._ctx.strokeStyle = "red";
-    this._ctx.fillStyle = "red";
+  _drawCircle (waypoint, size, color) {
+    this._ctx.strokeStyle = color;
+    this._ctx.fillStyle = color;
     this._ctx.beginPath();
-    this._ctx.arc(waypoint.x + .5 * this._cell_width, waypoint.y + .5 * this._cell_width, .25 * this._cell_width -2, 0, Math.PI * 2);
+    this._ctx.arc(waypoint.x + .5 * this._cell_width, waypoint.y + .5 * this._cell_width, size, 0, Math.PI * 2);
     this._ctx.fill();
   }
 
@@ -137,6 +160,14 @@ class RenderingController {
     return {
       x: this._grid_padding + point.x * this._cell_width + 0.5 * this._cell_width,
       y: this._grid_padding + point.y * this._cell_width + 0.5 * this._cell_width
+    };
+  }
+
+  _getMousePosition (e) {
+    let rect = this._$canvas.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
     };
   }
 }

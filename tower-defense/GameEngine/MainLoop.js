@@ -12,15 +12,16 @@ class MainLoop {
   }
 
   initializeLoop () {
-    this.gc = new GridController(configuration);
-    this.rc = new RenderingController(configuration);
+    this.grid_controller = new GridController(configuration);
+    this.rendering_controller = new RenderingController(configuration);
 
-    this.rc.drawGrid(this.gc);
+    this.rendering_controller.drawGrid(this.grid_controller);
 
     this._loop();
   }
 
   _loop () {
+    this.rendering_controller.drawGrid(this.grid_controller);
     let that = this;
     setTimeout(function(){that._loop();}, this._frame_duration);
   }
