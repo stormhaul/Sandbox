@@ -19,6 +19,8 @@ class GridController {
     this._path = this._generatePath();
 
     this._tower_builder = new TowerBuilder(configuration);
+    this.towers = [];
+    this.monsters = [];
   }
 
   initGrid () {
@@ -34,6 +36,18 @@ class GridController {
     this._generateWaypoints();
   }
 
+  isEmpty (pos) {
+    if (this._grid[pos.x][pos.y] != 0) {
+      return false;
+    }
+    for (let i in this._waypoints) {
+      if (pos == this._waypoints[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   getGrid () {
     return this._grid;
   }
@@ -43,7 +57,11 @@ class GridController {
   }
 
   addTower (location) {
-    this._grid[location.x][location.y] = this._tower_builder.buildTower(location);
+    let tower = this._tower_builder.buildTower(location);
+    this._grid[location.x][location.y] = tower;
+    this.towers.push(tower);
+    this._path = this._generatePath();
+    console.log(this._grid, this._path, this.towers);
   }
 
   _generateWaypoints () {

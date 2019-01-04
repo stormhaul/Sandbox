@@ -17,6 +17,14 @@ class MainLoop {
 
     this.rendering_controller.drawGrid(this.grid_controller);
 
+    let that = this;
+    document.addEventListener('click', function(e) {
+      let clicked_tile = that.rendering_controller.getMouseTile();
+      if (that.grid_controller.isEmpty(clicked_tile)) {
+        that.grid_controller.addTower(clicked_tile);
+      }
+    });
+
     this._loop();
   }
 

@@ -101,7 +101,7 @@ class AStar {
           possible.x < this._grid.length &&
           possible.y >= 0 &&
           possible.y < this._grid[0].length &&
-          this._blockers[this._grid[possible.x][possible.y]] == undefined) {
+          this._grid[possible.x][possible.y] == 0) {
         neighbors.push(possible);
       }
     }

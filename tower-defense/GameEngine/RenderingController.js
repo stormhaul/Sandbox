@@ -27,7 +27,7 @@ class RenderingController {
       mousePos = {x: Math.floor((mousePos.x - that._grid_padding) / that._cell_width), y: Math.floor((mousePos.y - that._grid_padding) / that._cell_width)};
       that.mousePos = mousePos;
       that.drawCursor(mousePos);
-    })
+    });
   }
 
   drawGrid (grid_controller) {
@@ -50,6 +50,7 @@ class RenderingController {
     }
 
     this.drawWaypoints(grid_controller);
+    this.drawTowers(grid_controller);
     this.drawCursor(this.mousePos);
   }
 
@@ -87,6 +88,17 @@ class RenderingController {
     if (mousePos.x >= 0 && mousePos.x < this._columns && mousePos.y >= 0 && mousePos.y < this._rows) {
       let position = {x: mousePos.x * this._cell_width + this._grid_padding, y: mousePos.y * this._cell_width + this._grid_padding};
       this._drawCircle(position, .5 * this._cell_width - 2, 'yellow');
+    }
+  }
+
+  getMouseTile () {
+    return this.mousePos;
+  }
+
+  drawTowers (grid_controller) {
+    for (let i in grid_controller.towers) {
+      let tower = grid_controller.towers[i];
+      this._drawCircle(this._convertToPixelCoord(tower.location), .5*this._cell_width - 2, 'blue');
     }
   }
 
@@ -169,5 +181,11 @@ class RenderingController {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
+  }
+  _convertToPixelCoord (coord) {
+    return {x: coord.x * this._cell_width + this._grid_padding, y: coord.y * this._cell_width + this._grid_padding};
+  }
+  _convertToGridCoord (coord) {
+    return {x: (coord.x - this._grid_padding) * this._cell_width, y: (coord.y - this._grid_padding) * this._cell_width};
   }
 }
