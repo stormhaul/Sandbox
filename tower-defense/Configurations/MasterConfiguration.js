@@ -14,5 +14,9 @@ var configuration = {
   tower_cost: 100,
   tower_rate: 1,
   tower_range: 5,
-  tower_damage: 20
+  tower_damage: 20,
+  monster_speed: 5,
+  monster_growth: 1.05,
+  monster_health: 100,
+  monster_value: 20
 };

@@ -20,7 +20,20 @@ class GridController {
 
     this._tower_builder = new TowerBuilder(configuration);
     this.towers = [];
-    this.monsters = [];
+
+    this._monster_controller = new MonsterController(configuration);
+    this.m_ct = 0;
+    this.w_ct = 0;
+    this.monsters = {};
+  }
+
+  spawnWave () {
+    for (let i = 0; i < 20; i++) {
+      let monster = this._monster_controller.spawnMonster(this._path[0][0], this.w_ct, this.m_ct + i);
+      this.monsters[this.m_ct] = monster;
+      this.m_ct++;
+    }
+    this.w_ct++;
   }
 
   initGrid () {

@@ -51,6 +51,7 @@ class RenderingController {
 
     this.drawWaypoints(grid_controller);
     this.drawTowers(grid_controller);
+    this.drawMonsters(grid_controller);
     this.drawCursor(this.mousePos);
   }
 
