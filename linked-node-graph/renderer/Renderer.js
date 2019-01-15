@@ -32,5 +32,20 @@ let Renderer = function(configuration) {
     this.ctx.stroke();
   }
 
+  r.drawCircle = function (origin, radius, color=configuration.defaults.colors.line, lineWidth=configuration.defaults.widths.line) {
+    this.ctx.strokeStyle = color;
+    this.ctx.lineWidth   = lineWidth;
+    this.ctx.beginPath();
+    this.ctx.arc(origin.x, origin.y, radius, 0, Math.PI * 2);
+    this.ctx.stroke();
+  }
+
+  r.drawSolidCircle = function (origin, radius, color=configuration.defaults.colors.fill) {
+    this.ctx.fillStyle = color;
+    this.ctx.beginPath();
+    this.ctx.arc(origin.x, origin.y, radius, 0, Math.PI * 2);
+    this.ctx.fill();
+  }
+
   return r;
 }

@@ -4,7 +4,8 @@ let configuration = {
       canvas: 'canvas'
     },
     colors: {
-      line: 'white'
+      line: 'white',
+      fill: 'pink'
     },
     widths: {
       line: 1
