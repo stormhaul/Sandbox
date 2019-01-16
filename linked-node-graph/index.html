@@ -11,8 +11,12 @@
   }
 </style>
 
-<script type="text/javascript" src='config.js'></script>
+<script type='text/javascript' src='helper.js'></script>
+<script type="text/javascript" src='configuration.js'></script>
 <script type="text/javascript" src='renderer/Renderer.js'></script>
+<script type="text/javascript" src='model/graph.js'></script>
+<script type="text/javascript" src='model/node.js'></script>
+<script type="text/javascript" src='model/link.js'></script>
 
 <script type="text/javascript">
     let r = new Renderer(configuration);
@@ -21,4 +25,6 @@
     r.drawRect({x:500,y:500}, 100, 100);
     r.drawCircle({x:100, y:100}, 50);
     r.drawSolidCircle({x:300, y:300}, 50);
+
+    let g = new Graph(configuration);
 </script>

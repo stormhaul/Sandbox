@@ -9,6 +9,14 @@ let configuration = {
     },
     widths: {
       line: 1
+    },
+    grid: {
+      width: 1000,
+      height: 1000
+    },
+    nodes: {
+      count: 5,
+      links: 4
     }
   }
 };

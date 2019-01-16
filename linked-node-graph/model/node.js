@@ -8,6 +8,9 @@ let Node = function(position) {
   n.addLink = function (link) {
     this.links.push(link);
   }
+  n.equals = function (node) {
+    return n.location == node.location;
+  }
 
   return n;
 }
